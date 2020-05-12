@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="isLoggedIn">
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
-      <a class="navbar-brand d-none d-sm-block" href="index.html">SB Admin Pro</a>
+      <a class="navbar-brand d-none d-sm-block" href="index.html">Blog Project</a>
       <button
         class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2"
         id="sidebarToggle"
@@ -57,23 +57,36 @@
       </ul>
     </nav>
     <div id="layoutSidenav">
-      <div id="layoutSidenav_nav">
+      <div id="layoutSidenav_nav" >
         <nav class="sidenav shadow-right sidenav-light">
           <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
               <div class="sidenav-menu-heading">Core</div>
 
               <router-link to="/dashboard" class="nav-link">
-              <div class="nav-link-icon">
+                <div class="nav-link-icon">
                   <i data-feather="activity"></i>
                 </div>Dashboards
               </router-link>
 
               <router-link to="/tag" class="nav-link">
-              <div class="nav-link-icon">
+                <div class="nav-link-icon">
                   <i data-feather="activity"></i>
                 </div>Tag
               </router-link>
+
+              <router-link to="/category" class="nav-link">
+                <div class="nav-link-icon">
+                  <i data-feather="activity"></i>
+                </div>Category
+              </router-link>
+
+              <router-link to="/testvuex" class="nav-link">
+                <div class="nav-link-icon">
+                  <i data-feather="activity"></i>
+                </div>Testvuex
+              </router-link>
+
               <div class="sidenav-menu-heading">Interface</div>
               <a
                 class="nav-link collapsed"
@@ -151,9 +164,16 @@
       </div>
     </div>
   </div>
+  <div v-else>
+      <router-view></router-view>
+  </div>
 </template>
 <script>
 export default {
-
-}
+    data(){
+        return{
+            isLoggedIn: false
+        }
+    }
+};
 </script>

@@ -13,16 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', 'API\AdminController@index');
+Route::any('{slug}', 'API\AdminController@index');
+
+/* Route::any('{slug}', function () {
     return view('adminmaster');
 });
-
-Route::get('/new', function(){
-    return response()->json([
-        'msg'=>'I\'m Joney Spark'
-    ]);
-});
-
-Route::any('{slug}', function () {
-    return view('adminmaster');
-});
+ */

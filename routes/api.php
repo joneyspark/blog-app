@@ -20,4 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResources([
     'tag' => 'API\TagController',
+    'category' => 'API\CategoryController',
+    'admin' => 'API\AdminController',
 ]);
+Route::post('adminlogin', 'API\LoginController@adminlogin');
+Route::post('categoryImage', 'API\CategoryController@categoryImage');
+Route::post('deletecategoryImage', 'API\CategoryController@deleteCategoryImage');

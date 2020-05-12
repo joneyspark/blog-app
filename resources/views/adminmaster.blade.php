@@ -121,10 +121,17 @@
             font-style: italic;
             }
         </style>
+        <script type="text/javascript">
+        (function (){
+            window.Laravel = {
+                csrfToken: '{{ csrf_token() }}'
+            };
+        })();
+        </script>
     </head>
     <body class="nav-fixed">
         <div id="app">
-            <main-app></main-app>
+            <admin-master></admin-master>
         </div>
         <script src="{{mix('/js/app.js')}}"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

@@ -15,11 +15,13 @@
     </div>
     <div class="container-fluid mt-n10">
       <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between">
-          <div>Tag Table</div>
+        <div class="card-header">
+          <div class="mr-2">
+            <strong>Tag Table</strong>
+          </div>
           <!-- Button trigger modal -->
           <div>
-            <button class="btn btn-outline-secondary" @click="addModal = true">Add New +</button>
+            <Button type="info" @click="addModal = true">Add New +</Button>
           </div>
         </div>
 
@@ -42,14 +44,6 @@
                   <td>
                     <Button type="info" size="small" @click="showEditModal(tag)">Edit</Button>
                     <Button type="error" size="small" @click="showDeleteModal(tag.id)">Delete</Button>
-
-                    <button class="btn btn-icon btn-transparent-dark mr-1">
-                      <i data-feather="eye"></i>
-                    </button>
-
-                    <button class="btn btn-icon btn-transparent-dark">
-                      <i data-feather="trash-2"></i>
-                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -95,11 +89,11 @@
           <span>Delete confirmation</span>
         </p>
         <div style="text-align:center">
-          <p>After this task is deleted, the downstream 10 tasks will not be implemented.</p>
+          <p>After you confirmation this item will be deleted. so check carefuly!</p>
           <p>Will you delete it?</p>
         </div>
         <div slot="footer">
-          <Button type="error" size="large" @click="deleteTag">Delete</Button>
+          <Button type="error" size="large" @click="deleteTag(deleteItem)">Delete</Button>
         </div>
       </Modal>
     </div>
@@ -117,6 +111,7 @@ export default {
       editModal: false,
       isAdding: false,
       deleteModal: false,
+      deleteItem: {},
       tags: [],
       errors: [],
       editData: {
@@ -125,6 +120,14 @@ export default {
     };
   },
   methods: {
+    async loadData() {
+      const res = await this.callApi("get", "api/tag");
+      if (res.status == 200) {
+        this.tags = res.data;
+      } else {
+        this.error();
+      }
+    },
     async addTag() {
       /* if (this.data.tagName.trim() == "") {
         return this.error("Tag Name is Required");
@@ -148,7 +151,7 @@ export default {
     },
     showDeleteModal(id) {
       this.deleteModal = true;
-      this.deleteModal = id;
+      this.deleteItem = id;
     },
     async editTag() {
       /* if (this.data.tagName.trim() == "") {
@@ -170,10 +173,12 @@ export default {
         }
       }
     },
-    async deleteTag() {
-      const res = await this.callApi("delete", "api/tag/" + id);
+    async deleteTag(deleteItem) {
+      const res = await this.callApi("delete", "api/tag/" + deleteItem);
       if (res.status === 200) {
+        this.deleteModal = false;
         this.success("Tag Delete Successfully");
+        Fire.$emit("autoLoadData");
       } else {
         if (res.status === 422) {
           this.errors = res.data.errors;
@@ -183,13 +188,11 @@ export default {
     }
   },
 
-  async created() {
-    const res = await this.callApi("get", "api/tag");
-    if (res.status == 200) {
-      this.tags = res.data;
-    } else {
-      this.error();
-    }
+  created() {
+    this.loadData();
+    Fire.$on("autoLoadData", () => {
+      this.loadData();
+    });
   }
 };
 </script>
