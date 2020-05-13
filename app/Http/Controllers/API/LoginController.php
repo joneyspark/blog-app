@@ -18,8 +18,18 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('api')->attempt($credentials)) {
+            $user = Auth::guard('api')->user();
+
+            if($user->userType == 'user'){
+                Auth::logout();
+                return response()->json([
+                    'msg' => 'You do Not have Access',
+                ], 401);
+            }
+
             return response()->json([
                 'msg' => 'You are logged in',
+                'user' => $user
             ]);
         }else{
             return response()->json([

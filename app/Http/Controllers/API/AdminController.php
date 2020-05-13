@@ -15,7 +15,8 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        //dd(Auth::guard('api')->user());
+
+        dd(auth()->guard()->user()->check());
         return view('adminmaster');
 
         //first check if you are loggedin and admin user ...
