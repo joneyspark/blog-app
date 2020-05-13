@@ -15,8 +15,19 @@ class LoginController extends Controller
             'email' => 'bail|required|email',
             'password' => 'bail|required|min:6',
         ]);
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('api')->attempt($credentials)) {
+            return response()->json([
+                'msg' => 'You are logged in',
+            ]);
+        }else{
+            return response()->json([
+                'msg' => 'Incorrect login details',
+            ], 401);
+        }
+        /* if(auth('api')::attempt(['email' => $request->email, 'password' => $request->password])){
+            $user = auth('api')->user();
             if($user->userType == 'user'){
                 Auth::logout();
                 return response()->json([
@@ -33,6 +44,6 @@ class LoginController extends Controller
             return response()->json([
                 'msg' => 'Incorrect login details',
             ], 401);
-        }
+        } */
     }
 }

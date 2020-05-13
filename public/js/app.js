@@ -3166,7 +3166,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 _context.next = 8;
-                return _this.callApi("post", "/adminlogin", _this.data);
+                return _this.callApi("post", "/api/adminlogin", _this.data);
 
               case 8:
                 res = _context.sent;

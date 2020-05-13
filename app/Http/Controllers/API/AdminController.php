@@ -15,24 +15,25 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        dd(Auth::check());
+        //dd(Auth::guard('api')->user());
+        return view('adminmaster');
 
         //first check if you are loggedin and admin user ...
 
-        if(!Auth::check() && $request->path() != 'login'){
+        /* if(!Auth::guard('api')->user() && $request->path() != 'login'){
             return redirect('/login');
         }
-        if(!Auth::check() && $request->path() == 'login' ){
+        if(!Auth::guard('api')->user() && $request->path() == 'login' ){
             return view('adminmaster');
         }
         // you are already logged in... so check for if you are an admin user..
-        $user = Auth::user();
+        $user = Auth::guard('api')->user();
         if($user->userType =='user'){
             return redirect('/login');
         }
         if($request->path() == 'login'){
             return redirect('/');
-        }
+        } */
     }
 
     /**

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'API\AdminController@index');
+
 Route::any('{slug}', 'API\AdminController@index');
 
 /* Route::any('{slug}', function () {

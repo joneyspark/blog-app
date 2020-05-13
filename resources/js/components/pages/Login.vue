@@ -100,7 +100,7 @@ export default {
       if (this.data.password.length < 6)
         return this.error("Incorrect Login Details");
 
-      const res = await this.callApi("post", "/adminlogin", this.data);
+      const res = await this.callApi("post", "/api/adminlogin", this.data);
       if (res.status === 200) {
         this.success(res.data.msg);
       } else {
